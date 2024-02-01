@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Backdrop, CircularProgress} from "@mui/material";
 
 export default function SimpleBackdrop({ loading }: { loading: boolean }) {

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
-  Close,
   NavigateBefore,
   NavigateNext,
   Refresh,
@@ -11,7 +10,6 @@ import {
   Box,
   Button,
   IconButton,
-  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
@@ -20,7 +18,7 @@ import CreateModal from "../components/CreateModal";
 import UpdateModal from "../components/UpdateModal";
 import DeleteModal from "../components/DeleteModal";
 import axiosInstance from "../assets/axiosInstance";
-import SimpleBackdrop from "../components/SimpleBackdrop";
+// import SimpleBackdrop from "../components/SimpleBackdrop";
 
 interface Assessment {
   _id: any;
@@ -35,8 +33,6 @@ export default function Home() {
   const [reload, setReload] = useState(false);
   const [assessments, setAssessments] = useState<Assessment[] | null>(null);
 
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,8 +44,8 @@ export default function Home() {
         const resData = await response.data;
         setAssessments(resData);
         console.log(assessments);
-        console.log(localStorage.getItem("token"));
-        setLoading(false)
+        console.log(response);
+        setLoading(false);
       } catch (error: any) {
         console.log(error.message);
         navigate("/signin");
@@ -57,37 +53,11 @@ export default function Home() {
     };
 
     fetchData();
-  }, [reload]);
+  }, [loading, reload]);
 
-  const handleClick = () => {
-    setOpenSnackbar(true);
-  };
-
-  const handleSnackbarClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenSnackbar(false);
-  };
-
-  const action = (
-    <IconButton size="small" onClick={handleSnackbarClose}>
-      <Close fontSize="small" />
-    </IconButton>
-  );
   return (
     <>
       {/* <SimpleBackdrop loading={loading} /> */}
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-        message="Deleted Successfully"
-        action={action}
-      />
 
       <Stack direction="row" bgcolor={grey[200]}>
         <Box width="15%" minHeight="100vh" bgcolor="primary.main"></Box>
