@@ -144,6 +144,7 @@ export default function SignUp() {
             <TextField
               fullWidth
               required
+              type={showPassword ? "text" : "password"}
               error={passwordErrMsg ? true : false}
               name="password"
               value={userData.password}
