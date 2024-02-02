@@ -22,7 +22,11 @@ const style = {
   p: 4,
 };
 
-export default function CreateModal({ setReload }: { setReload: any }) {
+export default function CreateModal({
+  setHomeLoading,
+}: {
+  setHomeLoading: any;
+}) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -32,7 +36,7 @@ export default function CreateModal({ setReload }: { setReload: any }) {
   const [assessmentData, setAssessmentData] = useState({
     name: "",
     description: "",
-    quantity: 1,
+    quantity: "",
   });
 
   const handleChange = (e: any) => {
@@ -54,12 +58,19 @@ export default function CreateModal({ setReload }: { setReload: any }) {
       );
       const resData = response.data;
       console.log(resData);
+      setHomeLoading(true);
     } catch (error: any) {
+      if (
+        error.response.status == 401 ||
+        error.response.status == 402 ||
+        error.response.status == 403
+      ) {
+        console.log(error.message);
+        navigate("/signin");
+      }
       console.log(error.message);
-      navigate("/signin");
     } finally {
       setLoading(false);
-      setReload(true)
       handleClose();
     }
   };
@@ -77,7 +88,7 @@ export default function CreateModal({ setReload }: { setReload: any }) {
       </Button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={{ ...style }}>
-          <Typography>Create Assessment</Typography>
+          <Typography variant="h6">Create Assessment</Typography>
           <Box
             component="form"
             autoComplete="on"
@@ -86,7 +97,7 @@ export default function CreateModal({ setReload }: { setReload: any }) {
           >
             <Stack direction="row" width={500} spacing={2}>
               <Box width="50%">
-                <Typography>Name</Typography>
+                <Typography pb={1}>Name</Typography>
                 <TextField
                   fullWidth
                   required
@@ -97,7 +108,7 @@ export default function CreateModal({ setReload }: { setReload: any }) {
                 />
               </Box>
               <Box width="50%">
-                <Typography>Quantity</Typography>
+                <Typography pb={1}>Quantity</Typography>
                 <TextField
                   fullWidth
                   required
@@ -110,7 +121,7 @@ export default function CreateModal({ setReload }: { setReload: any }) {
               </Box>
             </Stack>
             <Box py={3}>
-              <Typography>Description</Typography>
+              <Typography pb={1}>Description</Typography>
               <TextField
                 fullWidth
                 required
@@ -120,19 +131,19 @@ export default function CreateModal({ setReload }: { setReload: any }) {
                 placeholder="Enter the description"
               />
             </Box>
-            <Box position="relative">
-              <Button variant="contained" type="submit">
+            <Box position="relative" width="fit-content">
+              <Button variant="contained" type="submit" disabled={loading}>
                 Submit
               </Button>
               {loading && (
                 <CircularProgress
-                  size={40}
+                  size={30}
                   sx={{
                     position: "absolute",
                     top: "50%",
                     left: "50%",
-                    marginTop: "-20px",
-                    marginLeft: "-20px",
+                    marginTop: "-15px",
+                    marginLeft: "-15px",
                   }}
                 />
               )}

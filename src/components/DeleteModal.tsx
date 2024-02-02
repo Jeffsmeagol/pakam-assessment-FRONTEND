@@ -23,11 +23,11 @@ const style = {
 export default function DeleteModal({
   id,
   name,
-  setReload,
+  setHomeLoading,
 }: {
   id: any;
   name: string;
-  setReload: any;
+  setHomeLoading: any;
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -46,32 +46,43 @@ export default function DeleteModal({
       });
       const resData = response.data;
       console.log(resData);
+      setHomeLoading(true);
     } catch (error: any) {
+      if (
+        error.response.status == 401 ||
+        error.response.status == 402 ||
+        error.response.status == 403
+      ) {
+        console.log(error.message);
+        navigate("/signin");
+      }
       console.log(error.message);
-      navigate("/signin");
     } finally {
       setLoading(false);
-      setReload(true)
       handleClose();
     }
   };
   return (
     <>
-      <Button variant="contained" onClick={handleOpen}>
+      <Button variant="outlined" onClick={handleOpen}>
         Delete
       </Button>
 
       <Modal open={open} onClose={handleClose}>
         <Box sx={{ ...style }}>
-          <Typography>Delete {name} Assessment</Typography>
+          <Typography variant="h6">Delete {name} Assessment</Typography>
           <Typography p={4} pl={0}>
             Are you sure you want to delete this assessment?
           </Typography>
           <Stack direction="row" justifyContent="flex-end" spacing={2}>
-            <Button variant="outlined">Cancel</Button>
-            <Box position="relative">
+            <Button variant="outlined" onClick={handleClose}>
+              Cancel
+            </Button>
+
+            <Box position="relative" width="fit-content">
               <Button
                 variant="contained"
+                color="error"
                 onClick={deleteAssessment}
                 disabled={loading}
               >
@@ -79,14 +90,13 @@ export default function DeleteModal({
               </Button>
               {loading && (
                 <CircularProgress
-                  size={40}
-                  color="error"
+                  size={30}
                   sx={{
                     position: "absolute",
                     top: "50%",
-                    left: "-20px",
-                    marginTop: "-20px",
-                    marginLeft: "-20px",
+                    left: "50%",
+                    marginTop: "-15px",
+                    marginLeft: "-15px",
                   }}
                 />
               )}

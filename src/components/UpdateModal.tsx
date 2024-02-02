@@ -31,10 +31,10 @@ interface Assessment {
 
 export default function UpdateModal({
   assessment,
-  setReload,
+  setHomeLoading,
 }: {
   assessment?: Assessment;
-  setReload: any;
+  setHomeLoading: any;
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -67,12 +67,19 @@ export default function UpdateModal({
       );
       const resData = response.data;
       console.log(resData);
+      setHomeLoading(true);
     } catch (error: any) {
+      if (
+        error.response.status == 401 ||
+        error.response.status == 402 ||
+        error.response.status == 403
+      ) {
+        console.log(error.message);
+        navigate("/signin");
+      }
       console.log(error.message);
-      navigate("/signin");
     } finally {
       setLoading(false);
-      setReload(true);
       handleClose();
     }
   };
@@ -88,9 +95,9 @@ export default function UpdateModal({
       <Button variant="contained" onClick={handleOpen}>
         Update
       </Button>
-      <Modal open={open}>
+      <Modal open={open} onClose={handleClose}>
         <Box sx={{ ...style }}>
-          <Typography>Update Assessment</Typography>
+          <Typography variant="h6">Update Assessment</Typography>
           <Box
             component="form"
             autoComplete="on"
@@ -99,7 +106,7 @@ export default function UpdateModal({
           >
             <Stack direction="row" width={500} spacing={2}>
               <Box width="50%">
-                <Typography>Name</Typography>
+                <Typography pb={1}>Name</Typography>
                 <TextField
                   fullWidth
                   required
@@ -110,7 +117,7 @@ export default function UpdateModal({
                 />
               </Box>
               <Box width="50%">
-                <Typography>Quantity</Typography>
+                <Typography pb={1}>Quantity</Typography>
                 <TextField
                   fullWidth
                   required
@@ -123,7 +130,7 @@ export default function UpdateModal({
               </Box>
             </Stack>
             <Box py={3}>
-              <Typography>Description</Typography>
+              <Typography pb={1}>Description</Typography>
               <TextField
                 fullWidth
                 required
@@ -133,19 +140,19 @@ export default function UpdateModal({
                 placeholder="Enter the description"
               />
             </Box>
-            <Box position="relative">
+            <Box position="relative" width="fit-content">
               <Button variant="contained" type="submit" disabled={loading}>
                 Submit
               </Button>
               {loading && (
                 <CircularProgress
-                  size={40}
+                  size={30}
                   sx={{
                     position: "absolute",
                     top: "50%",
-                    left: "-20px",
-                    marginTop: "-20px",
-                    marginLeft: "-20px",
+                    left: "50%",
+                    marginTop: "-15px",
+                    marginLeft: "-15px",
                   }}
                 />
               )}

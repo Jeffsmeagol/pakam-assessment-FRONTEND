@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  NavigateBefore,
-  NavigateNext,
-  Refresh,
-} from "@mui/icons-material";
+import { NavigateBefore, NavigateNext, Refresh } from "@mui/icons-material";
 import {
   Box,
   Button,
+  CircularProgress,
   IconButton,
   Stack,
   Typography,
@@ -18,7 +15,6 @@ import CreateModal from "../components/CreateModal";
 import UpdateModal from "../components/UpdateModal";
 import DeleteModal from "../components/DeleteModal";
 import axiosInstance from "../assets/axiosInstance";
-// import SimpleBackdrop from "../components/SimpleBackdrop";
 
 interface Assessment {
   _id: any;
@@ -29,12 +25,11 @@ interface Assessment {
 
 export default function Home() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [reload, setReload] = useState(false);
+  const [homeLoading, setHomeLoading] = useState(true);
   const [assessments, setAssessments] = useState<Assessment[] | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = setTimeout(async () => {
       try {
         const response = await axiosInstance.get("/assessments", {
           headers: {
@@ -45,26 +40,24 @@ export default function Home() {
         setAssessments(resData);
         console.log(assessments);
         console.log(response);
-        setLoading(false);
+        setHomeLoading(false);
       } catch (error: any) {
         console.log(error.message);
         navigate("/signin");
       }
-    };
+    }, 1000);
 
-    fetchData();
-  }, [loading, reload]);
+    return () => clearTimeout(fetchData);
+  }, [homeLoading]);
 
   return (
     <>
-      {/* <SimpleBackdrop loading={loading} /> */}
-
       <Stack direction="row" bgcolor={grey[200]}>
         <Box width="15%" minHeight="100vh" bgcolor="primary.main"></Box>
 
         <Stack p={4} width="85%" spacing={4}>
           <Stack direction="row" justifyContent="space-between">
-            <Typography>Assessment</Typography>
+            <Typography variant="h5">Assessment</Typography>
             <Button
               variant="outlined"
               onClick={() => {
@@ -76,23 +69,21 @@ export default function Home() {
             </Button>
           </Stack>
           <Stack direction="row" justifyContent="flex-end">
-            <CreateModal setReload={setReload} />
+            <CreateModal setHomeLoading={setHomeLoading} />
           </Stack>
 
-          <Stack spacing={1}>
+          <Stack spacing={0.5}>
             <Stack
               direction="row"
               justifyContent="space-between"
-              alignItems="center"
               bgcolor="#fff"
-              // p={1}
               px={4}
             >
               <Stack direction="row" alignItems="center" spacing={2}>
                 <IconButton>
                   <Refresh />
                 </IconButton>
-                <Typography>Refresh</Typography>
+                <Typography fontWeight={500}>Refresh</Typography>
               </Stack>
               <Stack direction="row" alignItems="center" spacing={4}>
                 <Stack direction="row" spacing={2}>
@@ -118,42 +109,63 @@ export default function Home() {
               p={1}
               px={4}
             >
-              <Typography width="25%">Name</Typography>
-              <Typography width="25%">Description</Typography>
-              <Typography width="20%">Quantity</Typography>
-              <Typography width="30%" textAlign="center">
+              <Typography fontWeight={700} width="25%">
+                Name
+              </Typography>
+              <Typography fontWeight={700} width="25%">
+                Description
+              </Typography>
+              <Typography fontWeight={700} width="20%">
+                Quantity
+              </Typography>
+              <Typography fontWeight={700} width="30%" textAlign="center">
                 Action
               </Typography>
             </Stack>
-
-            {assessments?.map((assessment) => (
+            {homeLoading ? (
               <Stack
-                key={assessment._id}
-                direction="row"
-                justifyContent="space-between"
+                justifyContent="center"
                 alignItems="center"
-                bgcolor="#fff"
-                p={1}
-                px={4}
+                height="50vh"
+                // bgcolor={green[400]}
               >
-                <Typography width="25%">{assessment.name}</Typography>
-                <Typography width="25%">{assessment.description}</Typography>
-                <Typography width="20%">{assessment.quantity}</Typography>
-                <Stack
-                  width="30%"
-                  direction="row"
-                  justifyContent="center"
-                  spacing={2}
-                >
-                  <UpdateModal assessment={assessment} setReload={setReload} />
-                  <DeleteModal
-                    id={assessment._id}
-                    name={assessment.name}
-                    setReload={setReload}
-                  />
-                </Stack>
+                <CircularProgress />
               </Stack>
-            ))}
+            ) : (
+              assessments?.map((assessment) => (
+                <Stack
+                  key={assessment._id}
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  bgcolor="#fff"
+                  p={1}
+                  px={4}
+                >
+                  <Typography width="25%">{assessment.name}</Typography>
+                  <Typography width="25%">{assessment.description}</Typography>
+                  <Typography pl={2} width="20%">
+                    {assessment.quantity}
+                  </Typography>
+                  <Stack
+                    width="30%"
+                    direction="row"
+                    justifyContent="center"
+                    spacing={2}
+                  >
+                    <UpdateModal
+                      assessment={assessment}
+                      setHomeLoading={setHomeLoading}
+                    />
+                    <DeleteModal
+                      id={assessment._id}
+                      name={assessment.name}
+                      setHomeLoading={setHomeLoading}
+                    />
+                  </Stack>
+                </Stack>
+              ))
+            )}
           </Stack>
         </Stack>
       </Stack>

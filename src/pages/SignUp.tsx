@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../assets/axiosInstance";
 
 export default function SignUp() {
@@ -70,34 +70,39 @@ export default function SignUp() {
   };
   return (
     <Stack
-      justifyContent="space-evenly"
+      justifyContent="center"
       alignItems="center"
       minHeight="100vh"
       bgcolor={grey[200]}
     >
-      <Typography>T</Typography>
       <Box
         component="form"
         autoComplete="on"
         onSubmit={handleSubmit}
-        px={10}
-        py={6}
+        px={6}
+        py={3}
         bgcolor="#fff"
         width={800}
-        height={530}
         borderRadius={5}
       >
-        <Stack direction="row" justifyContent="center" alignItems="center">
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+        >
           <Box width={50}>
             <img src="/pakam-icon.png" width="100%" />
           </Box>
-          <Typography>Pakam</Typography>
+          <Typography variant="h6">Pakam</Typography>
         </Stack>
-        <Typography textAlign="center">Create Account</Typography>
+        <Typography variant="h5" textAlign="center" py={2}>
+          Create Account
+        </Typography>
 
         <Stack direction="row" spacing={2} py={2}>
           <Box width="50%">
-            <Typography>First name</Typography>
+            <Typography fontWeight={500}>First name</Typography>
             <TextField
               fullWidth
               required
@@ -108,7 +113,7 @@ export default function SignUp() {
             />
           </Box>
           <Box width="50%">
-            <Typography>Last name</Typography>
+            <Typography fontWeight={500}>Last name</Typography>
             <TextField
               fullWidth
               required
@@ -122,7 +127,7 @@ export default function SignUp() {
 
         <Stack direction="row" spacing={2} py={2}>
           <Box width="50%">
-            <Typography>Username</Typography>
+            <Typography fontWeight={500}>Username</Typography>
             <TextField
               fullWidth
               required
@@ -135,7 +140,7 @@ export default function SignUp() {
             />
           </Box>
           <Box width="50%">
-            <Typography>Password</Typography>
+            <Typography fontWeight={500}>Password</Typography>
             <TextField
               fullWidth
               required
@@ -197,11 +202,15 @@ export default function SignUp() {
           justifyContent="center"
           p={3}
         >
-          <Typography>Forgot Password? </Typography>
-          <Button>Retrieve Now</Button>
+          <Typography>Already a User? </Typography>
+          <Link to="/signin">
+            <Button>Click to Sign In</Button>
+          </Link>
         </Stack>
       </Box>
-      <Typography>Powered by Pakam Technology</Typography>
+      <Typography fontWeight={500} pt={2}>
+        Powered by Pakam Technology
+      </Typography>
     </Stack>
   );
 }

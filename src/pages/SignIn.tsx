@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../assets/axiosInstance";
 
 export default function SignIn() {
@@ -63,35 +63,35 @@ export default function SignIn() {
 
   return (
     <Stack
-      justifyContent="space-evenly"
+      justifyContent="center"
       alignItems="center"
       minHeight="100vh"
       bgcolor={grey[400]}
     >
-      <Typography sx={{ opacity: 0 }}>T</Typography>
       <Box
         px={10}
-        py={6}
+        py={3}
         bgcolor="#fff"
-        width={800}
-        height={530}
         borderRadius={5}
       >
-        <Stack direction="row" justifyContent="center" alignItems="center">
+        <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
           <Box width={50}>
             <img src="/pakam-icon.png" width="100%" />
           </Box>
-          <Typography>Pakam</Typography>
+          <Typography variant="h6">Pakam</Typography>
         </Stack>
-        <Typography textAlign="center">Login</Typography>
+        <Typography variant="h5" textAlign="center" py={2}>Login</Typography>
+
         <Stack
           component="form"
           autoComplete="on"
           onSubmit={handleSubmit}
           spacing={2}
+          width={500}
+
         >
           <Box>
-            <Typography>Username</Typography>
+            <Typography fontWeight={500}>Username</Typography>
             <TextField
               fullWidth
               required
@@ -104,7 +104,7 @@ export default function SignIn() {
             />
           </Box>
           <Box>
-            <Typography>Password</Typography>
+            <Typography fontWeight={500}>Password</Typography>
             <TextField
               fullWidth
               required
@@ -164,11 +164,15 @@ export default function SignIn() {
           justifyContent="center"
           p={3}
         >
-          <Typography>Forgot Password? </Typography>
-          <Button>Retrieve Now</Button>
+          <Typography>New to Pakam? </Typography>
+          <Link to="/signup">
+            <Button>Create an Account</Button>
+          </Link>
         </Stack>
       </Box>
-      <Typography>Powered by Pakam Technology</Typography>
+      <Typography fontWeight={500} pt={2}>
+        Powered by Pakam Technology
+      </Typography>
     </Stack>
   );
 }
