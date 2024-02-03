@@ -24,10 +24,12 @@ export default function DeleteModal({
   id,
   name,
   setHomeLoading,
+  setOpenDeleteSnackBar,
 }: {
   id: any;
   name: string;
   setHomeLoading: any;
+  setOpenDeleteSnackBar: (param: boolean) => void;
 }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -46,6 +48,7 @@ export default function DeleteModal({
       });
       const resData = response.data;
       console.log(resData);
+      setOpenDeleteSnackBar(true)
       setHomeLoading(true);
     } catch (error: any) {
       if (
@@ -70,7 +73,9 @@ export default function DeleteModal({
 
       <Modal open={open} onClose={handleClose}>
         <Box sx={{ ...style }}>
-          <Typography variant="h6">Delete {name} Assessment</Typography>
+          <Typography variant="h6" color="primary">
+            Delete {name} Assessment
+          </Typography>
           <Typography p={4} pl={0}>
             Are you sure you want to delete this assessment?
           </Typography>

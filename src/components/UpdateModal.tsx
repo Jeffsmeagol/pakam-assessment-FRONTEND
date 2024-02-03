@@ -97,7 +97,7 @@ export default function UpdateModal({
       </Button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={{ ...style }}>
-          <Typography variant="h6">Update Assessment</Typography>
+          <Typography variant="h6" color="primary">Update Assessment</Typography>
           <Box
             component="form"
             autoComplete="on"
@@ -141,7 +141,7 @@ export default function UpdateModal({
               />
             </Box>
             <Box position="relative" width="fit-content">
-              <Button variant="contained" type="submit" disabled={loading}>
+              <Button variant="contained" type="submit" disabled={loading} sx={{px: 6}}>
                 Submit
               </Button>
               {loading && (

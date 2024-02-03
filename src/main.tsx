@@ -12,6 +12,19 @@ const theme = createTheme({
       main: "#005700",
     },
   },
+  typography: {
+    fontFamily: "'Raleway', sans-serif",
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+          textTransform: "capitalize",
+        },
+      },
+    },
+  },
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

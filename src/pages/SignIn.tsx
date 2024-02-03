@@ -68,19 +68,23 @@ export default function SignIn() {
       minHeight="100vh"
       bgcolor={grey[400]}
     >
-      <Box
-        px={10}
-        py={3}
-        bgcolor="#fff"
-        borderRadius={5}
-      >
-        <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+      <Box px={10} py={3} bgcolor="#fff" borderRadius={5}>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          spacing={1}
+        >
           <Box width={50}>
             <img src="/pakam-icon.png" width="100%" />
           </Box>
-          <Typography variant="h6">Pakam</Typography>
+          <Typography variant="h6" color="primary">
+            Pakam
+          </Typography>
         </Stack>
-        <Typography variant="h5" textAlign="center" py={2}>Login</Typography>
+        <Typography variant="h5" textAlign="center" fontWeight={700} py={2}>
+          Login
+        </Typography>
 
         <Stack
           component="form"
@@ -88,10 +92,9 @@ export default function SignIn() {
           onSubmit={handleSubmit}
           spacing={2}
           width={500}
-
         >
           <Box>
-            <Typography fontWeight={500}>Username</Typography>
+            <Typography fontWeight={600}>Username</Typography>
             <TextField
               fullWidth
               required
@@ -104,7 +107,7 @@ export default function SignIn() {
             />
           </Box>
           <Box>
-            <Typography fontWeight={500}>Password</Typography>
+            <Typography fontWeight={600}>Password</Typography>
             <TextField
               fullWidth
               required

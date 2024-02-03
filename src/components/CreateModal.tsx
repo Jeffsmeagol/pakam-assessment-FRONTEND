@@ -83,12 +83,14 @@ export default function CreateModal({
 
   return (
     <>
-      <Button variant="contained" onClick={handleOpen}>
+      <Button variant="contained" sx={{px: 6}} onClick={handleOpen}>
         Create
       </Button>
       <Modal open={open} onClose={handleClose}>
         <Box sx={{ ...style }}>
-          <Typography variant="h6">Create Assessment</Typography>
+          <Typography variant="h6" color="primary">
+            Create Assessment
+          </Typography>
           <Box
             component="form"
             autoComplete="on"
@@ -132,7 +134,7 @@ export default function CreateModal({
               />
             </Box>
             <Box position="relative" width="fit-content">
-              <Button variant="contained" type="submit" disabled={loading}>
+              <Button variant="contained" type="submit" disabled={loading} sx={{px: 6}}>
                 Submit
               </Button>
               {loading && (

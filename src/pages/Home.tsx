@@ -15,6 +15,7 @@ import CreateModal from "../components/CreateModal";
 import UpdateModal from "../components/UpdateModal";
 import DeleteModal from "../components/DeleteModal";
 import axiosInstance from "../assets/axiosInstance";
+import DeleteSnackBar from "../components/DeleteSnackBar";
 
 interface Assessment {
   _id: any;
@@ -27,6 +28,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [homeLoading, setHomeLoading] = useState(true);
   const [assessments, setAssessments] = useState<Assessment[] | null>(null);
+  const [openDeleteSnackBar, setOpenDeleteSnackBar] = useState(false);
 
   useEffect(() => {
     const fetchData = setTimeout(async () => {
@@ -45,13 +47,17 @@ export default function Home() {
         console.log(error.message);
         navigate("/signin");
       }
-    }, 1000);
+    }, 100);
 
     return () => clearTimeout(fetchData);
   }, [homeLoading]);
 
   return (
     <>
+      <DeleteSnackBar
+        openDeleteSnackBar={openDeleteSnackBar}
+        setOpenDeleteSnackBar={setOpenDeleteSnackBar}
+      />
       <Stack direction="row" bgcolor={grey[200]}>
         <Box width="15%" minHeight="100vh" bgcolor="primary.main"></Box>
 
@@ -60,6 +66,7 @@ export default function Home() {
             <Typography variant="h5">Assessment</Typography>
             <Button
               variant="outlined"
+              color="error"
               onClick={() => {
                 localStorage.removeItem("token");
                 navigate("/signin");
@@ -161,6 +168,7 @@ export default function Home() {
                       id={assessment._id}
                       name={assessment.name}
                       setHomeLoading={setHomeLoading}
+                      setOpenDeleteSnackBar={setOpenDeleteSnackBar}
                     />
                   </Stack>
                 </Stack>

@@ -94,15 +94,15 @@ export default function SignUp() {
           <Box width={50}>
             <img src="/pakam-icon.png" width="100%" />
           </Box>
-          <Typography variant="h6">Pakam</Typography>
+          <Typography variant="h6"  color="primary">Pakam</Typography>
         </Stack>
-        <Typography variant="h5" textAlign="center" py={2}>
+        <Typography variant="h5" textAlign="center" fontWeight={700} py={2}>
           Create Account
         </Typography>
 
         <Stack direction="row" spacing={2} py={2}>
           <Box width="50%">
-            <Typography fontWeight={500}>First name</Typography>
+            <Typography fontWeight={600}>First name</Typography>
             <TextField
               fullWidth
               required
@@ -113,7 +113,7 @@ export default function SignUp() {
             />
           </Box>
           <Box width="50%">
-            <Typography fontWeight={500}>Last name</Typography>
+            <Typography fontWeight={600}>Last name</Typography>
             <TextField
               fullWidth
               required
@@ -127,7 +127,7 @@ export default function SignUp() {
 
         <Stack direction="row" spacing={2} py={2}>
           <Box width="50%">
-            <Typography fontWeight={500}>Username</Typography>
+            <Typography fontWeight={600}>Username</Typography>
             <TextField
               fullWidth
               required
@@ -140,7 +140,7 @@ export default function SignUp() {
             />
           </Box>
           <Box width="50%">
-            <Typography fontWeight={500}>Password</Typography>
+            <Typography fontWeight={600}>Password</Typography>
             <TextField
               fullWidth
               required
@@ -209,7 +209,7 @@ export default function SignUp() {
           </Link>
         </Stack>
       </Box>
-      <Typography fontWeight={500} pt={2}>
+      <Typography fontWeight={600} pt={2}>
         Powered by Pakam Technology
       </Typography>
     </Stack>
